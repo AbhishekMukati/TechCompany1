@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TechCompany</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      /* Basic CSS for header and navigation links */
+      header {
+        background-color: #f2f2f2;
+        padding: 10px 0;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        display: inline;
+        margin-right: 20px;
+      }
+
+      nav ul li:last-child {
+        margin-right: 0;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <% if user_signed_in? %>
+      <header>
+        <nav>
+          <ul>
+            <li><%= link_to 'Products', products_path %></li>
+            <li><%= link_to 'Categories', categories_path %></li>
+          </ul>
+        </nav>
+      </header>
+      <%end %>
+
+    <!-- Navigation links -->
+    <% if user_signed_in? %>
+      <%= form_tag destroy_user_session_path, method: :delete do %>
+        <%= submit_tag "Sign out" %>
+      <% end %>
+    <% else %>
+      <%= link_to('Sign in', new_user_session_path) %> |
+      <%= link_to('Sign up', new_user_registration_path) %>
+    <% end %>
+
+    <!-- Page content -->
+    <%= yield %>
+  </body>
+</html>
